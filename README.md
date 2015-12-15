@@ -1,6 +1,11 @@
 # yle2m4v
-Download video file (with subtitles, if any) from Yle Areena
-and convert the downloaded FLV file into a M4V file
+
+Download video file (with subtitles, if any) from Yle Areena and
+convert the downloaded FLV file into a M4V file. The FLV file is
+inserted as-is into the M4V container; there is no demuxing/remuxing
+involved, so video quality is not changed.
+
+
 
 Usage: yle2m4v [url]
 
