@@ -49,17 +49,18 @@ echo "FLV $flv"
 if [[ -e $flv ]]
 then
     if [[ -e $subs ]]
-        ffmpeg -i ./"$flv" -i ./"$subs" -map 0 -map 1 -c copy -c:s mov_text ./"$target"
-    else
-        ffmpeg -i ./"$flv" -map 0 -c copy ./"$target"
-    fi
-    if [[ -e $target ]]
     then
-        echo "Converted $flv -> $target, removing source file(s)"
-	rm "$flv" "$subs"
-    else
-        echo "$flv -> $target conversion failed."
+       ffmpeg -i ./"$flv" -i ./"$subs" -map 0 -map 1 -c copy -c:s mov_text ./"$target"
+       else
+           ffmpeg -i ./"$flv" -map 0 -c copy ./"$target"
     fi
-else
-    echo "$1 download failed."
-fi
+       if [[ -e $target ]]
+       then
+           echo "Converted $flv -> $target, removing source file(s)"
+	   rm "$flv" "$subs"
+       else
+           echo "$flv -> $target conversion failed."
+       fi
+       else
+	   echo "$1 download failed."
+    fi
