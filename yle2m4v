@@ -37,14 +37,15 @@ fi
 
 title=$(yle-dl --showtitle $1)
 target=${title}.m4v
-subs=$(ls ${title}*.srt)
 flv=${title}.flv
+
+yle-dl $1
+subs=$(ls ${title}*.srt)
 
 echo "Target ${target}"
 echo "Subs $subs"
 echo "FLV $flv"
 
-yle-dl $1
 if [[ -e $flv ]]
 then
     if [[ -e $subs ]]
