@@ -1,5 +1,7 @@
 # yle2m4v
 
+v1.1
+
 Download video file (with subtitles, if any) from Yle Areena and
 convert the downloaded FLV file into a M4V file. The FLV file is
 inserted as-is into the M4V container; there is no demuxing/remuxing
@@ -25,7 +27,6 @@ The following external binaries have to be available in path:
 (c) 2015 Ola Rinta-Koski
 
 ## TODO
-- handle multiple subtitle languages (for now, none or 1 language assumed)
-- what to do if FLV/SUB/M4V file exists? clobber (like now), or not?
-- this functionality should really be part of yle-dl, so consider
+- add -f (force) option to clobber existing FLV file
+- this script's functionality should really be part of yle-dl, so consider
    this a quick stopgap hack
