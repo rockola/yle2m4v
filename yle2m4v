@@ -44,7 +44,7 @@ then
 else
     yle-dl $1
 fi
-subs=$(ls {title}*.srt)
+subs=$(ls ${title}*.srt)
 
 echo "Target ${target}"
 echo "Subs $subs"
