@@ -44,7 +44,8 @@ then
 else
     yle-dl $1
 fi
-subs=$(ls ${title}*.srt)
+unsetopt nomatch
+subs=(${title}*.srt)
 
 echo "Target ${target}"
 echo "Subs $subs"
@@ -69,7 +70,7 @@ then
     done
     args+=( ./"$target" )
 
-    #echo ARGS ${args}
+    echo ARGS ${args}
     ffmpeg ${args}
 
     if [[ -e $target ]]
