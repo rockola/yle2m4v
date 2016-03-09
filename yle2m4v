@@ -35,6 +35,7 @@ then
 fi
 
 title=$(yle-dl --showtitle $1)
+title=$(echo $title | tr '/' '_')
 target=${title}.m4v
 flv=${title}.flv
 
