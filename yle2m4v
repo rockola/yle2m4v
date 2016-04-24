@@ -46,7 +46,7 @@ else
     yle-dl $1
 fi
 
-subs=$(find . -maxdepth 1 -type f -name "${title}*.srt)" -print)
+subs=$(find . -maxdepth 1 -type f -name "${title}*.srt" -print)
 
 echo "Target ${target}"
 echo "Subs $subs"
