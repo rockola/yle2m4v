@@ -79,7 +79,11 @@ then
     if [[ -e $target ]]
     then
         echo "Converted $flv -> $target, removing source file(s)"
-        rm "$flv" ${subs}
+        rm "$flv"
+	echo ${subs}|while read sub
+	do
+	    rm ${sub}
+	done
     else
         echo "$flv -> $target conversion failed."
     fi
