@@ -26,7 +26,7 @@
 # - this script's functionality should really be part of yle-dl, so consider
 #   this a quick stopgap hack
 #
-# v1.1
+# v1.2
 
 if [[ "$#" -ne 1 ]]
 then
@@ -45,27 +45,29 @@ then
 else
     yle-dl $1
 fi
-unsetopt nomatch
-subs=(${title}*.srt)
+#unsetopt nomatch
+subs=$(find . -maxdepth 1 -type f -name "${title}*.srt" -print)
 
 echo "Target ${target}"
 echo "Subs $subs"
 echo "FLV $flv"
 
+nsubs=0
 if [[ -e $flv ]]
 then
     args=( -i ./"$flv" )
-    for s in $subs
+    echo $subs|while read s
     do
 	args+=( '-i' ./"$s" )
+        nsubs=$((nsubs+1))
     done
     args+=( '-map' 0 )
-    for ((i = 0; i < $#subs; i++))
+    for ((i = 0; i < $nsubs; i++))
     do
 	args+=( '-map' $((1+i)) )
     done
     args+=( -c copy )
-    for ((i = 0; i < $#subs; i++))
+    for ((i = 0; i < $nsubs; i++))
     do
 	args+=( -c:s mov_text )
     done
