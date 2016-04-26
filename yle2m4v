@@ -46,28 +46,26 @@ else
     yle-dl $1
 fi
 #unsetopt nomatch
-subs=$(find . -maxdepth 1 -type f -name "${title}*.srt" -print)
-
+subfiles=(${title}*.srt)
+subs=($subfiles[@]:t)
 echo "Target ${target}"
 echo "Subs $subs"
 echo "FLV $flv"
 
-nsubs=0
 if [[ -e $flv ]]
 then
     args=( -i ./"$flv" )
-    echo $subs|while read s
+    for s in $subs
     do
 	args+=( '-i' ./"$s" )
-        nsubs=$((nsubs+1))
     done
     args+=( '-map' 0 )
-    for ((i = 0; i < $nsubs; i++))
+    for ((i = 0; i < $#subs; i++))
     do
 	args+=( '-map' $((1+i)) )
     done
     args+=( -c copy )
-    for ((i = 0; i < $nsubs; i++))
+    for ((i = 0; i < $#subs; i++))
     do
 	args+=( -c:s mov_text )
     done
@@ -80,9 +78,9 @@ then
     then
         echo "Converted $flv -> $target, removing source file(s)"
         rm "$flv"
-	echo ${subs}|while read sub
+	for sub in $subs
 	do
-	    rm ${sub}
+	    rm $sub
 	done
     else
         echo "$flv -> $target conversion failed."
