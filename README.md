@@ -20,11 +20,12 @@ The following external binaries have to be available in path:
     edit as appropriate     
 - yle-dl
   - for downloading, see http://aajanki.github.io/yle-dl/
+- either AdobeHDS.php or youtube-dl, see yle-dl documentation
 - ffmpeg
   - for converting, see http://www.ffmpeg.org/
     (probably available via your system's package manager)
 
-(c) 2015 Ola Rinta-Koski
+(c) 2015-2016 Ola Rinta-Koski
 
 ## TODO
 - add -f (force) option to clobber existing FLV file
