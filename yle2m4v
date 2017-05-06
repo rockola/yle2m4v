@@ -48,19 +48,19 @@ echo "FLV $flv"
 
 if [[ -e $flv ]]
 then
-    cmd=(ffmpeg -i ./"$flv")
+    cmd=(ffmpeg -i ./${(q)flv})
     map=(-map 0)
     copy=(-c copy)
     for sub in $subs
     do
 	n=$((n+1))
-	cmd+=(-i ./"$sub")
+	cmd+=(-i ./${(q)sub})
 	map+=(-map $n)
 	copy+=(-c:s mov_text)
     done
     cmd+=$map
     cmd+=$copy
-    cmd+=./"$target"
+    cmd+=./${(q)target}
 
     echo ${cmd}
     eval ${cmd}
