@@ -1,6 +1,6 @@
 # yle2m4v
 
-v1.2
+v1.3
 
 Download video file (with subtitles, if any) from Yle Areena and
 convert the downloaded FLV file into a M4V file. The FLV file is
@@ -25,7 +25,7 @@ The following external binaries have to be available in path:
   - for converting, see http://www.ffmpeg.org/
     (probably available via your system's package manager)
 
-(c) 2015-2017 Ola Rinta-Koski
+(c) 2015-2018 Ola Rinta-Koski
 
 ## TODO
 - add -f (force) option to clobber existing FLV file

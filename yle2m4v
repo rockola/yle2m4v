@@ -3,7 +3,7 @@
 # yle2m4v
 #
 # Download video file (with subtitles, if any) from Yle Areena
-# and convert the downloaded FLV file into a M4V file
+# and merge the downloaded MP4 with subtitles to form a new MP4 file
 #
 # Usage: yle2m4v [url]
 #
@@ -19,15 +19,15 @@
 #          http://www.ffmpeg.org/
 #          (probably available via your system's package manager)
 #
-# (c) 2015-2017 Ola Rinta-Koski
+# (c) 2015-2018 Ola Rinta-Koski
 #
 # TODO:
-# - what to do if FLV/SUB/M4V file exists? clobber (like now), or not?
+# - what to do if MP4/SUB file exists? clobber (like now), or not?
 # - this functionality should really be part of yle-dl, so consider
 #   this a quick stopgap hack (note: yle-dl now does postprocessing
 #   with a script)
 #
-# v1.2
+# v1.3
 
 if [[ "$#" -ne 1 ]]
 then
@@ -36,42 +36,54 @@ then
 fi
 
 title=$(yle-dl --showtitle $1)
-target=${title}.m4v
-flv=${title}.flv
+target=${title}_subs.mp4
+src=${title}.mp4
 
+# use yle-dl to retrieve mp4 + any subtitles
 yle-dl $1
+# did we get any subtitles? if so they go in array 'subs'
 subs=(${title}*.srt)
 
 echo "Target ${target}"
 echo "Subs $subs"
-echo "FLV $flv"
+echo "Source $src"
 
-if [[ -e $flv ]]
+if [[ -e $src ]]
 then
-    cmd=(ffmpeg -i ./${(q)flv})
+    cmd=(ffmpeg -i ./${(q)src})
     map=(-map 0)
     copy=(-c copy)
+    metadata=()
+    subn=0
+    # add needed ffmpeg options for each subtitle file
     for sub in $subs
     do
 	n=$((n+1))
 	cmd+=(-i ./${(q)sub})
 	map+=(-map $n)
 	copy+=(-c:s mov_text)
+        # subtitle language id is embedded in the filename: foo.lang.sub
+        parts=(${(@s/./)sub})
+        nlang=$(($#parts-1))
+        lang=$parts[$nlang]
+        metadata+=(-metadata:s:s:$subn language=$lang)
+	subn=$((subn+1))
     done
     cmd+=$map
     cmd+=$copy
+    cmd+=$metadata
     cmd+=./${(q)target}
 
     echo ${cmd}
     eval ${cmd}
 
-       if [[ -e $target ]]
-       then
-           echo "Converted $flv -> $target, removing source file(s)"
-	   rm "$flv" $subs
-       else
-           echo "$flv -> $target conversion failed."
-       fi
-       else
-	   echo "$1 download failed."
+    if [[ -e $target ]]
+    then
+        echo "Converted $src -> $target, removing source file(s)"
+	rm "$src" $subs
+    else
+        echo "$src -> $target conversion failed."
     fi
+else
+    echo "$1 download failed."
+fi
