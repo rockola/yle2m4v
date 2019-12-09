@@ -1,5 +1,7 @@
 # yle2m4v
 
+**NOTE: this script is no longer needed, as subtitles are included in the MKV file downloaded by yle-dl**
+
 v1.3
 
 Download video file (with subtitles, if any) from Yle Areena and
